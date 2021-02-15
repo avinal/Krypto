@@ -1,23 +1,34 @@
-# Railway Commodity Reservation System
+# Multimedia Content Protection System
 
 ## Project Statement
 
-Rail communication is an old-age and proven to be the safest mode of transportation. Further, Indian railway is one of the largest railway network in India. We are aware that for the Indian railways, there is a number of passenger reservation system known to the rail passengers and out of which the IRCTC RPS is the most sophisticated one and the most popular among public. In parallel to public transportation, Indian railways is also very much effective for commodity transportation. However, Indian railways is yet to launch any reservation mechanism for commodity transportation. This project is to take up this limitation and propose to develop a commodity reservation system.
+Multimedia information like text, audio, video and any combination of those are most pervasive in
+almost every application fields namely Computer, Network, Smartphone and elsewhere. We also
+require a high degree of privacies of our own document. There is a problem that how such a document
+can be protected from unauthorized access. Of course, there are many methods such as using password,
+smartcard, biometrics, etc. are known. Nevertheless, the existing methods have their own limitations as
+robustness and cost issues. This project would aim to devise a (new) method and develop a user
+friendly and cost effective solution to the problem.
 
 ### Input
-- A database stating the network of transportation connectivity by rail cargos.
-- Different cargos and their rout of movements, schedule, cost of transportation, whether express
-or normal service etc.
+- A detail profile of the user, who wish to protect the document. The profile template will be finalized after a careful discussion with the team member (i.e., software engineer here).
+- If any other input that might require.
+- Document itself to be protected
 
 ### Functions
-- Availability check
-- Booking a transportation
-- Canceling a transportation
+- Encryption of document
+- Decryption of document
+- Opening a document under protection
+- Deleting a document under protection
+- Copying a document under protection
 
 ### Output
-- Results on availability for a given date with capacity
-- Booking confirmation
-- Cancellation of an existing booking and confirmation
+- Document after encryption
+- Document after decryption
+- Result on opening a document: success or failure; locking for three unsuccessful attempts
+- Results on deleting a document under protection: success or failure; locking for three unsuccessful attempts
+- Results on copying a document under protection: success or failure; locking for three
+unsuccessful attempts
 
 # Implementation
 
