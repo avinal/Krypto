@@ -7,9 +7,14 @@
  * The driver code
  */
 
-#include <blowfish/blowfish.hpp>
-#include <iostream>
+#include "Utils.hpp"
+using namespace MCPS;
 int main(int argc, char const *argv[]) {
-  std::cout << "Hello Encryption";
+  fileop start;
+  auto data = start.scan_current_directory();
+
+  for (auto d : data) {
+    d.second.print();
+  }
   return 0;
 }
