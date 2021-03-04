@@ -10,8 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SQLITECPP_RUN_CPPCHECK OFF CACHE BOOL "" FORCE)
 set(SQLITECPP_RUN_CPPLINT OFF CACHE BOOL "" FORCE)
-
-add_subdirectory(blowfish)
+if(NOT TARGET libblowfish)
+    add_subdirectory(blowfish)
+endif()
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
