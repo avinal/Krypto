@@ -7,7 +7,7 @@
  * Utilities
  */
 // include blowfish library
-#include <blowfish/blowfish.hpp>
+#include <blowfish/blowfish.h>
 
 // include standard headers
 #include <filesystem>
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include<unordered_map>
 
 // defines
 namespace fs = std::filesystem;
@@ -27,12 +28,13 @@ namespace MCPS {
 struct filestat {
   std::string filename;
   fs::path filepath;
-  DWORD filesize;
+  uint64_t filesize;
   fs::file_type filetype;
   std::time_t m_time;
   bool is_regular;
-
-  filestat(std::string const &file_name);
+  filestat() {} // default constructor
+  filestat(std::string const &file_name); 
+  filestat(filestat const &stat); // copy constructor
   void print();
 
 private:
@@ -49,15 +51,15 @@ private:
   std::unordered_map<std::string, filestat> _files;
 
 public:
-  DWORD read_file(std::string const &infile, std::vector<char> &input_buf,
+  uint64_t read_file(std::string const &infile, std::vector<char> &input_buf,
                   filestat const &stat);
 
-  DWORD write_file(std::string const &outfile, std::vector<char> &output_buf,
-                   DWORD out_size);
+  uint64_t write_file(std::string const &outfile, std::vector<char> &output_buf,
+                   uint64_t out_size);
   std::unordered_map<std::string, filestat> scan_current_directory();
-  DWORD pad_input(std::vector<char> &input_buf, DWORD in_size);
-  DWORD attch_key(std::vector<char> &input_buf, std::string const &key,
-                  DWORD in_size);
+  uint64_t pad_input(std::vector<char> &input_buf, uint64_t in_size);
+  uint64_t attach_key(std::vector<char> &input_buf, std::string const &key,
+                  uint64_t in_size);
 };
 
 } // namespace MCPS
