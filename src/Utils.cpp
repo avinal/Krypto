@@ -7,7 +7,7 @@
  * File utilities
  */
 
-#include "Utils.hpp"
+#include "Utils.h"
 
 namespace MCPS {
 
@@ -24,6 +24,15 @@ filestat::filestat(std::string const &file_name) : filename(file_name) {
   is_regular = fs::is_regular_file(filepath);
 }
 
+filestat::filestat(filestat const &stat) {
+  filename = stat.filename;
+  filepath = stat.filepath;
+  filesize = stat.filesize;
+  filetype = stat.filetype;
+  m_time = stat.m_time;
+  is_regular = stat.is_regular;
+}
+
 void filestat::print() {
   std::cout << "File name: " << filename << std::endl
             << "File path: " << filepath << std::endl
@@ -32,8 +41,8 @@ void filestat::print() {
             << std::asctime(std::localtime(&m_time)) << std::endl;
 }
 
-DWORD fileop::pad_input(std::vector<char> &input_buf, DWORD in_size) {
-  int dv = sizeof(WORD) * 2, rem;
+uint64_t fileop::pad_input(std::vector<char> &input_buf, uint64_t in_size) {
+  unsigned int dv = sizeof(uint32_t) * 2, rem;
   rem = ((in_size >= dv) ? (((in_size / dv) + 1) * dv - in_size)
                          : (dv - in_size));
   if (rem < dv) {
@@ -43,8 +52,8 @@ DWORD fileop::pad_input(std::vector<char> &input_buf, DWORD in_size) {
   return in_size;
 }
 
-DWORD fileop::attch_key(std::vector<char> &input_buf, std::string const &key,
-                        DWORD in_size) {
+uint64_t fileop::attach_key(std::vector<char> &input_buf,
+                            std::string const &key, uint64_t in_size) {
   input_buf.resize(in_size + MAXKEYBYTES + 3);
   std::for_each(key.begin(), key.end(), [&](char k) {
     input_buf[in_size] = k;
@@ -53,9 +62,9 @@ DWORD fileop::attch_key(std::vector<char> &input_buf, std::string const &key,
   return in_size;
 }
 
-DWORD fileop::read_file(std::string const &infile, std::vector<char> &input_buf,
-                        filestat const &stat) {
-  WORD in_size = 0, readsize = stat.filesize + 1;
+uint64_t fileop::read_file(std::string const &infile,
+                           std::vector<char> &input_buf, filestat const &stat) {
+  uint32_t in_size = 0, readsize = stat.filesize + 1;
   std::ifstream ifile(infile, std::ios::in | std::ios::binary);
   if (!ifile) {
     std::cerr << "Unable to open file: " << infile << std::endl;
@@ -73,8 +82,8 @@ DWORD fileop::read_file(std::string const &infile, std::vector<char> &input_buf,
   return in_size;
 }
 
-DWORD fileop::write_file(std::string const &outfile,
-                         std::vector<char> &output_buf, DWORD out_size) {
+uint64_t fileop::write_file(std::string const &outfile,
+                            std::vector<char> &output_buf, uint64_t out_size) {
   std::ofstream ofile(outfile,
                       std::ios::out | std::ios::binary | std::ios::trunc);
   if (!ofile) {
@@ -85,7 +94,7 @@ DWORD fileop::write_file(std::string const &outfile,
                 out_size * sizeof(char));
   }
   ofile.close();
-  return 0;
+  return fs::file_size(outfile);
 }
 
 std::unordered_map<std::string, filestat> fileop::scan_current_directory() {
@@ -93,7 +102,7 @@ std::unordered_map<std::string, filestat> fileop::scan_current_directory() {
   fs::path current = fs::current_path();
   for (const auto &file : fs::directory_iterator(current)) {
     if (fs::is_regular_file(file)) {
-      std::string _filename(file.path().filename());
+      std::string _filename(file.path().filename().string());
       filestat fstat(_filename);
       _files.insert({_filename, fstat});
     }
