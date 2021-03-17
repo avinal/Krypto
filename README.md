@@ -1,4 +1,4 @@
-# Multimedia Content Protection System
+# Krypto - Multimedia Content Protection System
 
 ## Project Statement
 
