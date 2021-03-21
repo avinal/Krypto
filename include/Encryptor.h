@@ -34,7 +34,7 @@ public:
   ~Encryptor();
   uint64_t blowfish_encrypt(std::vector<char> &input_buf,
                             std::string const &key, uint64_t in_size);
-  uint64_t blowfish_decrypt(std::vector<char> const &input_buf,
+  uint64_t blowfish_decrypt(std::vector<char> &input_buf,
                             std::string const &key, uint64_t in_size);
 };
 
