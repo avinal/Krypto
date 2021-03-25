@@ -7,14 +7,11 @@
  * The driver code
  */
 
-#include "Utils.hpp"
-using namespace MCPS;
-int main(int argc, char const *argv[]) {
-  fileop start;
-  auto data = start.scan_current_directory();
+#include "Utils.h"
 
-  for (auto d : data) {
-    d.second.print();
-  }
+int main(int argc, char const *argv[]) {
+  krypto::fileop test;
+  std::vector<char> buffer;
+
   return 0;
 }
