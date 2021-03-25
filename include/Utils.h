@@ -23,7 +23,7 @@ namespace fs = std::filesystem;
 #if !defined(UTILS_HPP)
 #define UTILS_HPP
 
-namespace MCPS {
+namespace krypto {
 
 struct filestat {
   std::string filename;
@@ -62,6 +62,6 @@ public:
                   uint64_t in_size);
 };
 
-} // namespace MCPS
+} // namespace krypto
 
 #endif // UTILS_HPP

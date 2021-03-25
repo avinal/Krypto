@@ -9,7 +9,7 @@
 
 #include "Utils.h"
 
-namespace MCPS {
+namespace krypto {
 
 /**
  * Generates file stats for a given file name.
@@ -109,4 +109,4 @@ std::unordered_map<std::string, filestat> fileop::scan_current_directory() {
   }
   return _files;
 }
-} // namespace MCPS
+} // namespace krypto
