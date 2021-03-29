@@ -24,6 +24,11 @@ filestat::filestat(std::string const &file_name) : filename(file_name) {
   is_regular = fs::is_regular_file(filepath);
 }
 
+/**
+ * Copy constructor of the filestat struct.
+ *
+ * @param stat      Another filestat to copy
+ */
 filestat::filestat(filestat const &stat) {
   filename = stat.filename;
   filepath = stat.filepath;
@@ -33,6 +38,14 @@ filestat::filestat(filestat const &stat) {
   is_regular = stat.is_regular;
 }
 
+/**
+ * Prints the file properties gathered by filestat.
+ * File Name
+ * File Path
+ * File Size
+ * Last Modification Time
+ *
+ */
 void filestat::print() {
   std::cout << "File name: " << filename << std::endl
             << "File path: " << filepath << std::endl
@@ -41,6 +54,15 @@ void filestat::print() {
             << std::asctime(std::localtime(&m_time)) << std::endl;
 }
 
+/**
+ * The encrypt function encrypts/decrypts 8 bytes in a go. And thus the buffer
+ * size must be a multiple of 8. If not then rest of the space is padded null.
+ *
+ * @param input_buf     Input char buffer
+ * @param in_size       Size of the buffer
+ *
+ * @return              total size after padding
+ */
 uint64_t fileop::pad_input(std::vector<char> &input_buf, uint64_t in_size) {
   unsigned int dv = sizeof(uint32_t) * 2, rem;
   rem = ((in_size >= dv) ? (((in_size / dv) + 1) * dv - in_size)
@@ -52,6 +74,15 @@ uint64_t fileop::pad_input(std::vector<char> &input_buf, uint64_t in_size) {
   return in_size;
 }
 
+/**
+ * Attaches the encrypted password to the buffer.
+ *
+ * @param input_buf      Input char buffer
+ * @param key            Encrypted Password
+ * @param in_size        size of input buffer
+ *
+ * @return               total size of buffer after attaching key
+ */
 uint64_t fileop::attach_key(std::vector<char> &input_buf,
                             std::string const &key, uint64_t in_size) {
   input_buf.resize(in_size + MAXKEYBYTES + 3);
@@ -62,6 +93,15 @@ uint64_t fileop::attach_key(std::vector<char> &input_buf,
   return in_size;
 }
 
+/**
+ * Reads input file into char buffer
+ *
+ * @param infile         Input file name
+ * @param input_buf      Input char buffer
+ * @param stat           File stats
+ *
+ * @return               total buffer size after reading file
+ */
 uint64_t fileop::read_file(std::string const &infile,
                            std::vector<char> &input_buf, filestat const &stat) {
   uint32_t in_size = 0, readsize = stat.filesize + 1;
@@ -82,6 +122,15 @@ uint64_t fileop::read_file(std::string const &infile,
   return in_size;
 }
 
+/**
+ * Write file from a buffer
+ *
+ * @param outfile       Output file name
+ * @param output_buf    Output char buffer
+ * @param out_size      Total write size
+ *
+ * @return              Number of bytes written
+ */
 uint64_t fileop::write_file(std::string const &outfile,
                             std::vector<char> &output_buf, uint64_t out_size) {
   std::ofstream ofile(outfile,
@@ -97,6 +146,12 @@ uint64_t fileop::write_file(std::string const &outfile,
   return fs::file_size(outfile);
 }
 
+/**
+ * Scans the current directory and stores their information into an unordered
+ * map.
+ *
+ * @return        Unordered Map: "key": string, "value": filestat
+ */
 std::unordered_map<std::string, filestat> fileop::scan_current_directory() {
   std::string ext(".cpp");
   fs::path current = fs::current_path();
