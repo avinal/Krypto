@@ -34,7 +34,13 @@ unsuccessful attempts
 
 
 # Working
-
+1. Fork this project
+2. Run following commands
+  ```bash
+    mkdir build
+    cd build
+    cmake ..
+ ```
 
 # Details
 - Name: **Avinal Kumar**
