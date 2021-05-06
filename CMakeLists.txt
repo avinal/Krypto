@@ -25,5 +25,3 @@ file(GLOB KRYPTO_INC ${PROJECT_SOURCE_DIR}/include/*.h)
 add_executable(${PROJECT_NAME} ${KRYPTO_SRC} ${KRYPTO_INC})
 target_include_directories(${PROJECT_NAME} PRIVATE blowfish/include PUBLIC include)
 target_link_libraries(${PROJECT_NAME} blowfish)
-
-

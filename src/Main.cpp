@@ -21,9 +21,14 @@ int main(int argc, char const *argv[]) {
   test.pad_input(buffer, stat.filesize);
 
   krypto::Encryptor encryptor;
-  // encryptor.blowfish_encrypt(buffer, password, stat.filesize);
-  encryptor.blowfish_decrypt(buffer,password,stat.filesize);
-  test.write_file(filename.substr(8) , buffer, stat.filesize);
-   
+  int pos;
+  if ((pos = filename.find("krypto")) != std::string::npos) {
+    encryptor.blowfish_decrypt(buffer, password, stat.filesize);
+    test.write_file(filename.substr(0, pos-1), buffer, stat.filesize);
+  } else {
+    encryptor.blowfish_encrypt(buffer, password, stat.filesize);
+    test.write_file(filename + ".krypto", buffer, stat.filesize);
+  }
+
   return 0;
 }
