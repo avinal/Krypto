@@ -6,7 +6,7 @@ Multimedia information like text, audio, video and any combination of those are 
 almost every application fields namely Computer, Network, Smartphone and elsewhere. We also
 require a high degree of privacies of our own document. There is a problem that how such a document
 can be protected from unauthorized access. Of course, there are many methods such as using password,
-smartcard, biometrics, etc. are known. Nevertheless, the existing methods have their own limitations as
+smart card, biometrics, etc. are known. Nevertheless, the existing methods have their own limitations as
 robustness and cost issues. This project would aim to devise a (new) method and develop a user
 friendly and cost effective solution to the problem.
 
@@ -40,5 +40,5 @@ unsuccessful attempts
 - Name: **Avinal Kumar**
 - Roll No: **185067**
 - Course: **CSD-327 Software Engineering LAB**
-- Date: 
+- Date: May 6th, 2021
 - Submitted to: **Dr. Dharmendra Prasad Mahto**
